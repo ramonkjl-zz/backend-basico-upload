@@ -1,0 +1,1 @@
+Nessa pasta vão as fotos.
