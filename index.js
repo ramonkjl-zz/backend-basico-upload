@@ -39,4 +39,4 @@ mongoose.connect(process.env.MONGODB_URI, {
 //Outras--
 server.use(require('./routes'))
 
-server.listen(8080, () => console.log("Server running"))
+server.listen(process.env.PORT || 8080 )
