@@ -12,11 +12,11 @@ server.use(express.urlencoded({ extended: true }))
 //CONFIG Cors
 //let i = 1
 let ip = ''
-server.use((req, res, next) => {
-    res.header('Acess-Control-Allow-Origin', 'http://192.168.100.29:3000')
+server.use('/', (req, res, next) => {
+    //res.header('Acess-Control-Allow-Origin', 'http://192.168.100.29:3000')
     res.header('Acess-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
     res.header('Acess-Control-Allow-Headers', 'Content-Type, Authorization')
-    server.use(cors())
+    server.use(cors({ origin: 'https.galosburguer.vercel.app' }))
     //console.log(`Acessou pela ${i++}ª vez.`)
     //console.log(`Host: ${req.headers.host}`)
     //console.log(req.headers.referer)
