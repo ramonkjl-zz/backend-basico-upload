@@ -47,23 +47,7 @@ router
 
 
     //POST
-    .post('/', upload.single('file'), async (req, res) => {
-
-        const data = new FormData()
-        data.append('image', req.file)
-
-        var requestOptions = {
-            method: 'POST',
-            headers: { Authorization: "Client-ID 815dc3c22d9d7e0" },
-            body: data,
-            redirect: 'follow'
-        };
-
-        const respo = await fetch('https://api.imgur.com/3/image', requestOptions)
-            .then(console.log)
-            .catch(console.error)
-
-
+    .post('/', upload.single('file'), (req, res) => {
 
         Post.create({
             name: req.body.name,
@@ -77,6 +61,7 @@ router
             .catch(err => res.status(400).json({ error: true, data: err }))
     })
     //--------------------------------------------------------------------------
+
     //PUT
     .put('/:id', upload.single('file'), (req, res) => {
         if (req.file) {
