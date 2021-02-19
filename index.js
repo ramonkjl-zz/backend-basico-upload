@@ -13,7 +13,7 @@ server.use(express.urlencoded({ extended: true }))
 //let i = 1
 let ip = ''
 server.use('/', (req, res, next) => {
-    //res.header('Acess-Control-Allow-Origin', 'http://192.168.100.29:3000')
+    res.header('Acess-Control-Allow-Origin', '*')
     res.header('Acess-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
     res.header('Acess-Control-Allow-Headers', 'Content-Type, Authorization')
     server.use(cors({ origin: 'https.galosburguer.vercel.app' }))
