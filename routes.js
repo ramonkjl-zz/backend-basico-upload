@@ -35,7 +35,7 @@ router
         ip = await (req.headers.host)
 
         Post.find({}).sort({ createdAt: 'DESC' })
-            .then(data => res.json({ error: false, data: data, ip: req.headers.host}))
+            .then(data => res.json({ error: false, data: data, ip: req.headers.host }))
             .catch(err => res.status(400).json({ error: true, data: err }))
     })
 
@@ -47,16 +47,30 @@ router
 
 
     //POST
-    .post('/', upload.single('file'), (req, res) => {
+    .post('/', upload.single('file'), async (req, res) => {
+
+        const data = new FormData()
+        data.append('image', req.file)
+
+        const respo = await fetch('https://api.imgur.com/3/image', {
+            method: 'POST',
+            //headers: { Authorization}
+            body: data
+        })
+            .then(console.log)
+            .catch(console.error)
+
+
+
         Post.create({
             name: req.body.name,
             description: req.body.description,
             photo_name: req.file.originalname,
             photo_key: req.file.filename,
-            photo_url: process.env.SERVER_URL+`/uploads/${req.file.filename}`
+            photo_url: process.env.SERVER_URL + `/uploads/${req.file.filename}`
             //photo_url: `http://${req.headers.host}/uploads/${req.file.filename}`
         })
-            .then((data) => res.json({ error: false, data: data }))
+            .then((data) => res.json({ error: false, data: data, resposta: respo }))
             .catch(err => res.status(400).json({ error: true, data: err }))
     })
     //--------------------------------------------------------------------------
@@ -72,7 +86,7 @@ router
                 description: req.body.description,
                 photo_name: req.file.originalname,
                 photo_name: req.file.filename,
-                photo_url: process.env.SERVER_URL+`/uploads/${req.file.filename}`
+                photo_url: process.env.SERVER_URL + `/uploads/${req.file.filename}`
                 //photo_url: `http://${req.headers.host}/uploads/${req.file.filename}`
             })
                 .then(() => res.json({ error: false, message: "Alteração feita" }))
@@ -90,8 +104,8 @@ router
     //DELETE
     .delete('/:id', (req, res) => {
         //Deletando o arquivo no disco
-        Post.findOne({_id:req.params.id})
-            .then( data => promisify(fs.unlink)(path.resolve(__dirname, '.', 'uploads', data.photo_key)))
+        Post.findOne({ _id: req.params.id })
+            .then(data => promisify(fs.unlink)(path.resolve(__dirname, '.', 'uploads', data.photo_key)))
         //Deletando os dados no banco
         Post.deleteOne({ _id: req.params.id })
             .then(() => res.json({ erro: false, message: "Deletado com sucesso" }))
