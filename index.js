@@ -13,9 +13,9 @@ server.use(express.urlencoded({ extended: true }))
 //let i = 1
 let ip = ''
 server.use('/', (req, res, next) => {
-    res.header('Acess-Control-Allow-Origin', '*')
-    res.header('Acess-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-    res.header('Acess-Control-Allow-Headers', 'Content-Type, Authorization')
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     server.use(cors({ origin: 'https.galosburguer.vercel.app' }))
     //console.log(`Acessou pela ${i++}ª vez.`)
     //console.log(`Host: ${req.headers.host}`)
