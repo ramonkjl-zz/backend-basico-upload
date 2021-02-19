@@ -52,11 +52,14 @@ router
         const data = new FormData()
         data.append('image', req.file)
 
-        const respo = await fetch('https://api.imgur.com/3/image', {
+        var requestOptions = {
             method: 'POST',
-            //headers: { Authorization}
-            body: data
-        })
+            headers: { Authorization: "Client-ID 815dc3c22d9d7e0" },
+            body: data,
+            redirect: 'follow'
+        };
+
+        const respo = await fetch('https://api.imgur.com/3/image', requestOptions)
             .then(console.log)
             .catch(console.error)
 
