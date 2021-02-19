@@ -35,7 +35,7 @@ router
         ip = await (req.headers.host)
 
         Post.find({}).sort({ createdAt: 'DESC' })
-            .then(data => res.json({ error: false, data: data}))
+            .then(data => res.json({ error: false, data: data, ip: req.headers.host}))
             .catch(err => res.status(400).json({ error: true, data: err }))
     })
 
